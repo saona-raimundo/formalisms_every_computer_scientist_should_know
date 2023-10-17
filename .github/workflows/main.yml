@@ -1,15 +1,21 @@
+name: 'Build LaTex Document'
+
 on: [push]
 
 jobs:
-  latex-job:
+  build:
     runs-on: ubuntu-latest
-    name: A job to Compile Latex file
+
     steps:
-    - uses: actions/checkout@v1
-    - name: Compilation
-      uses: vinay0410/tectonic-action@master
-      env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tex_path: 'main.tex'
-        push: 'yes'
+      - name: Checkout
+        uses: actions/checkout@v4
+      - uses: wtfjoke/setup-tectonic@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run Tectonic
+        run: tectonic main.tex
+      - name: Upload pdf
+        uses: actions/upload-artifact@v3
+        with:
+          name: main
+          path: main.pdf
