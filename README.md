@@ -8,6 +8,6 @@ Formalisms Every Computer Scientist Should Know course at ISTA 2023.
 2. Link to it in `main.tex` adding `\input{class_X.tex}`.
 3. Whenever you are finished, push to the repository.
 
-If you need new macros, add them to `preamble.tex`.
+If you need new macros, add them to your chapter, enclosed by `{{` and `}}` to make your definitions local.
 
 Compilation of the pdf is automatic through GitHub Actions.

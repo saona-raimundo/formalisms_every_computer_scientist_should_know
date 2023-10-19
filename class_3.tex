@@ -1,2 +1,177 @@
+{{%Localize command definitions
+
+\newcommand{\NN}{\mathbb{N}}
+\renewcommand{\implies}{\Rightarrow}
+\newcommand{\implied}{\Leftarrow}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\gfp}{\mathrm{gfp}}
+\newcommand{\lfp}{\mathrm{lfp}}
+\newcommand{\defas}{\coloneqq}
+\renewcommand{\le}{\sqsubseteq}
+\renewcommand{\ge}{\sqsupseteq}
+\renewcommand{\sqcap}{\bigsqcap}
+\renewcommand{\sqcup}{\bigsqcup}
+\newcommand{\bottom}{\perp}
+
+
+\newcommand{\Theorem}[2][]{\begin{theorem}[#1]#2\end{theorem}}
+\newcommand{\Definition}[2][]{\begin{definition}[#1]#2\end{definition}}
+\newcommand{\Example}[2][]{\begin{example}[#1]#2\end{example}}
+\newcommand{\Homework}[2][]{\begin{homework}[#1]#2\end{homework}}
+\newcommand{\Lemma}[2][]{\begin{lemma}[#1]#2\end{lemma}}
+
+
 \chapter{Class 3}
 
+	
+
+\Definition[Prefixpoint]{
+	Consider a lattice $(A, \le)$ and a function $f \colon A \to A$. 
+	The set of prefixes is
+	\[
+		\{ x \in A : x \le f(x) \} \,.
+	\] 
+}
+
+\Definition[Postfixpoint]{
+	Consider a lattice $(A, \le)$ and a function $f \colon A \to A$. 
+	The set of postfixes is
+	\[
+		\{ x \in A : f(x) \le x \} \,.
+	\] 
+}
+
+\Definition[$\gfp$ and $\lfp$]{
+	Consider a complete lattice $(A, \le)$ and a function $f \colon A \to A$. 
+	Then, 
+	\begin{align*}
+		\gfp f &\defas \sqcup \{ x \in A : x \le f(x) \} \\
+		\lfp f &\defas \sqcap \{ x \in A : f(x) \le x \} \,.
+	\end{align*}
+}
+
+\Theorem[Fixpoints] {
+	Consider a complete lattice $(A, \le)$ and a monotonic function $f \colon A \to A$.
+	Then, $\gfp f$ and $\lfp f$ are fixpoints of $f$ and, for all fixpoints $x$ of $f$, we have $\lfp f \le x \le \gfp f$.
+}
+
+
+\Definition[$\sqcup$-continuous]{
+	Consider a complete lattice $(A, \le)$.
+	A function $f \colon A \to A$ is $\sqcup$-continuous if, for all increasing sequences $x_0 \le x_1 \le x_2 \le x_2 \le \ldots$, we have
+	\[
+		f \left( \sqcup \{ x_n : n \in \NN \} \right) = \sqcup \{ f(x_n) : n \in \NN \} \,.
+	\] 
+}
+
+\Definition[$\sqcap$-continuous]{
+	Consider a complete lattice $(A, \le)$.
+	A function $f \colon A \to A$ is $\sqcap$-continuous if, for all increasing sequences $x_0 \ge x_1 \ge x_2 \ge x_2 \ge \ldots$, we have
+	\[
+		f \left( \sqcap \{ x_n : n \in \NN \} \right) = \sqcap \{ f(x_n) : n \in \NN \} \,.
+	\] 
+}
+
+\Lemma{
+	$\sqcup$-continuous implies monotonicity and $\sqcap$-continuous implies monotonicity.
+}
+
+
+\Theorem[Constructive fixpoints] {
+	Consider a complete lattice $(A, \le)$ and a monotonic function $f \colon A \to A$.
+	Then, 
+	\begin{align*}
+		\lfp f 
+			&= \sqcup \{ f^n(\bottom) : n \in \NN \} \\
+		\gfp f 
+			&= \sqcap \{ f^n(\top) : n \in \NN \} \,.
+	\end{align*}
+}
+
+\Homework{
+	Prove this theorem.
+}
+
+
+\Definition[$\NN$]{
+	Define $\NN$ as the smallest set X such that 
+	\begin{enumerate}
+		\item $0 \in X$
+		\item if $n \in X$, then $S n \in X$
+	\end{enumerate} 
+}
+
+In the definition of $\NN$, we consider a universal set $U$ sufficiently big, the complete lattice $(2^U, \subseteq)$ and the function on sets given by $f(Y) \defas \{0\} \cup \{ S n : n \in Y \}$. 
+Then, $\lfp f = \NN$.	
+
+\Definition[Set of words]{
+	Consider a finite alphabet $\Sigma$.
+	Define $\Sigma^*$ as the smallest set $X$ such that 
+	\begin{enumerate}
+		\item $\eps \in X$
+		\item for all $a \in \Sigma$, we have $aX \subseteq X$.
+	\end{enumerate} 
+}
+
+A few remarks are in place.
+\begin{itemize}
+	\item 
+		Inductively defined sets are countable and consists of finite elements.
+	\item 
+		Inductively defined sets can be written as rules $x \implies f(x)$ meaning that, if $x \in X$, then $f(x) \in X$.
+	\item 
+		Inductively defined sets allow proof by induction.
+		Consider prove that for all $x \in X$ we have $G(x)$.
+		This can be proven by showing
+		\begin{enumerate}
+			\item $G(\bottom)$
+			\item For all $x \in X$, if $G(x)$, then $G(f(x))$
+		\end{enumerate}
+\end{itemize}
+
+\Definition[Balanced binary sequences]{
+	Define the set $S$ as the largest set $X$ such that
+	\begin{enumerate}
+		\item $X \subseteq 01X \cup 10X$.
+	\end{enumerate}
+}
+
+In the definition of balanced binary sequences, we consider the complete lattice $(\Sigma^\omega, \subseteq)$ and the function on sets given by $f(X) \defas 01X \cup 10X$. 
+Then, balanced binary sequences corresponds to $\gfp f$.	
+
+\Definition[Interval {$[0, 1]$}]{
+	Define the set $S$ as the largest set $X$ such that
+	\begin{enumerate}
+		\item $X \subseteq 0X \cup 1X \cup \ldots \cup 9X$.
+	\end{enumerate}
+}
+
+A few remarks are in place.
+\begin{itemize}
+	\item 
+		Coinductively defined sets are uncountable and consists of infinite elements.
+	\item 
+		Coinductively defined sets can be written as rules $x \implied f(x)$ meaning that, for all $y \in X$, there exists $x$ such that $y = f(x)$ and $x \in X$.
+	\item 
+		Coinductively defined sets allow proof by induction.
+		Consider prove that for all $x \in X$ we have $G(x)$.
+		This can be proven by showing
+		\begin{enumerate}
+			\item For all $x$ and $i$, if $G(f_i(x))$, then $G(x)$
+		\end{enumerate}
+		where $\{f_1, \ldots, f_n\}$ is the set of rules that define the set $X$.
+\end{itemize}
+
+
+\Homework[Prove balanced binary sequences]{
+	Consider $S$ generated by the rules $X \implied 01X$ and $X \implied 10X$. 
+	Prove that, for all binary words $x$, we have that $x\ in S$ if and only iff every finite prefix of even length of $x$ has the same number of $0$s and $1$s.  
+}
+
+Hints.
+\begin{enumerate}
+	\item The direction $\implied$ can be proven by coinduction.
+	\item The direction $\implies$ can be proven by induction on the length of the prefix.
+\end{enumerate}
+
+}} % End localization of command definitions
