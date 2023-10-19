@@ -4,6 +4,10 @@ Formalisms Every Computer Scientist Should Know course at ISTA 2023.
 
 ## Contributions
 
-Type your class in a separate TeX file and add it to `main.tex`.
-If you need nnew macros, add them to `preamble.tex`.
+1. Type your class in a separate TeX file `class_X.tex`.
+2. Link to it in `main.tex` adding `\input{class_X.tex}`.
+3. Whenever you are finished, push to the repository.
+
+If you need new macros, add them to `preamble.tex`.
+
 Compilation of the pdf is automatic through GitHub Actions.
