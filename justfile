@@ -1,4 +1,4 @@
-# use PowerShell instead of sh:
+# use nushell instead of sh:
 set shell := ["nu.exe", "-c"]
 
 # serve a version with hot reload
