@@ -1,1 +1,142 @@
 \chapter{Class 1}
+
+\newcommand{\Reals}{\mathbb{R}}
+
+\section{Tools}
+\begin{itemize}
+  \item Lean or Coq 
+  \item CVC5 or Z3 
+  \item possibly a model checker 
+  \item professional version of ChatGPT
+\end{itemize}
+
+\section{Syllabus}
+\begin{enumerate}
+  \item MATH (``Informalism'')
+  \begin{itemize}
+    \item proofs (natural deduction)
+    \item fixpoints (induction, coinduction)
+  \end{itemize}
+  \item DECLARATIVE LOGIC
+  \begin{itemize}
+    \item syntax (rules) vs. semantics (models)
+    \item propositional, predicate, modal logic 
+    \item decision procedures (SAT, SMT)
+  \end{itemize}
+  \item FUNCTIONS
+  \begin{itemize}
+    \item $\lambda$ calculus, typed $\lambda$
+    \item SOS (structured operational semantics), rewriting
+    \item ``propositions-as-types'' (connection to logic)
+  \end{itemize}
+  \item PROCESSES (CONCURRENT)* 
+  \begin{itemize}
+    \item CCS, Petri nets
+    \item (bi-) simulation
+  \end{itemize}
+  \item CIRCUITS*
+  \begin{itemize}
+    \item boolean, sequential, dataflow (Kahn nets)
+    \item interfaces
+  \end{itemize}
+  \item STATE TRANSITION SYSTEMS*
+  \begin{itemize}
+    \item ($\omega$-) automata, games, timed, probabilistic, pushdown
+    \item programs, Turing machines 
+    \item grammars (Chomsky hierarchy)
+  \end{itemize} 
+  \item DECLARATIVE SPECIFICATION
+  \begin{itemize}
+    \item Hoare logics, separation logic 
+    \item temporal logics (LTL, CTL, ATL)
+    \item partial correctness vs. termination, safety vs. liveness 
+  \end{itemize}
+\end{enumerate}
+
+*: Operational.
+
+\section{Math}
+\begin{definition}
+  A real $b$ is a \underline{bound} of a 
+  function $f$ from $\Reals$ to $\Reals$ if for all $x$ in 
+  $\Reals$, we have $f(x) \leq b$. 
+\end{definition}
+
+\begin{definition}
+  Given two functions $f$ and $g$ from $\Reals$ to 
+  $\Reals$, their \underline{sum} is the function $f + g$ such 
+  that for all $x$ in $\Reals$, we have $(f+g) (x) = f(x) + g(x)$.
+\end{definition} 
+
+\begin{theorem}
+  For all functions $f$ and $g$ from $\Reals$ to $\Reals$, if $f$ and
+  $g$ are bounded, then $f+g$ is bounded. 
+\end{theorem}
+\begin{proof}
+  \begin{enumerate}
+    \item Consider arbitrary functions $\hat{f}$ and $\hat{g}$ from 
+    $\Reals$ to $\Reals$.
+    \item Assume $\hat{f}$ and $\hat{g}$ are bounded. 
+    \item Show that $\hat{f} + \hat{g}$ is bounded.
+    \item (2 $\rightarrow$) Let $\hat{a}$ be a bound for $\hat{f}$, 
+    and $\hat{b}$ be a bound for $\hat{g}$.
+    \item We show that $\hat{a} + \hat{b}$ is a bound for 
+    $\hat{f} + \hat{g}$.
+    \item Consider an arbitrary real $\hat{x}$.
+    \item Show $(\hat{f}+\hat{g})(x) \leq \hat{a} + \hat{b}$.
+    \item (Definition of sum) $(\hat{f}+\hat{g})(\hat{x}) 
+    = \hat{f}(\hat{x}) + \hat{g}(\hat{x})$.
+    \item (Definition of bound) $\hat{f}(\hat{x}) \leq \hat{a}$ and 
+    $\hat{g}(\hat{x}) \leq \hat{b}$.
+    \item The rest follows from ``arithmetic''. 
+  \end{enumerate}
+\end{proof}
+
+\noindent \textbf{Homework.} Prove the Schr\"{o}der-Bernstein theorem 
+``in this style''.
+
+\begin{definition}
+  Two sets $A$ and $B$ are \underline{equipollent} (``have the same 
+  size'') if there is a bijection from $A$ to $B$.
+\end{definition}
+
+\begin{definition}
+  A function $f$ from $A$ to $B$ is 
+  \begin{enumerate}
+    \item \underline{one-to-one} if for all $x$ and $y$ in $A$, if 
+    $x \neq y$, then $f(x) \neq f(y)$.
+    \item \underline{onto} if for all $z$ in $B$, there exists $x$ 
+    in $A$ such that $f(x) = z$.
+    \item \underline{bijective} if $f$ is one-to-one and onto.
+  \end{enumerate}
+\end{definition}
+
+\begin{center}
+\begin{tabular}{
+  p{0.35\linewidth} | p{0.35\linewidth} | p{0.2\linewidth}}
+  Goals & Knowledge & Outermost symbol \\
+  \hline
+  \begin{itemize}[leftmargin=*]
+    \item[] Show for all $x$, $G(x)$.
+    \item[] Consider arbitrary $\hat{x}$.
+    \item[] Show $G(\hat{x})$. 
+  \end{itemize} & \begin{itemize}[leftmargin=*]
+    \item[] We know for all $x$, $K(x)$.
+    \item[] In particular, we know $K(\hat{t})$.
+    \item[] $\hat{t}$: term containing only constants. 
+  \end{itemize} & \begin{itemize}
+    \item[] \Large $\forall$
+  \end{itemize} \\ 
+  \hline 
+  \begin{itemize}[leftmargin=*]
+    \item[] Show there exists $x$ s.t. $G(x)$.
+    \item[] We show that $G(\hat{t})$.
+    \item[] $\hat{t}$: term containing only constants.
+  \end{itemize} & \begin{itemize}[leftmargin=*]
+    \item[] We know there exists $x$ s.t. $K(x)$.
+    \item[] Let $\hat{x}$ be s.t. $K(\hat{x})$.
+  \end{itemize} & \begin{itemize}
+    \item[] \Large $\exists$
+  \end{itemize}
+\end{tabular}
+\end{center}
