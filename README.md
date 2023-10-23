@@ -2,6 +2,9 @@
 
 Formalisms Every Computer Scientist Should Know course at ISTA 2023.
 
+This repo contains LaTeX transcription of the classes.
+There are also [Lean transcriptions of the classes](https://github.com/madvorak/fecssk). 
+
 ## Contributions
 
 1. Type your class in a separate TeX file `class_X.tex`.
