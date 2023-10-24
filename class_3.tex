@@ -116,12 +116,12 @@ Then, $\lfp f = \NN$.
 A few remarks are in place.
 \begin{itemize}
 	\item 
-		Inductively defined sets are countable and consists of finite elements.
+		Inductively defined sets are countable and consist of finite elements.
 	\item 
 		Inductively defined sets can be written as rules $x \implies f(x)$ meaning that, if $x \in X$, then $f(x) \in X$.
 	\item 
 		Inductively defined sets allow proof by induction.
-		Consider prove that for all $x \in X$ we have $G(x)$.
+		Consider proving that for all $x \in X$ we have $G(x)$.
 		This can be proven by showing
 		\begin{enumerate}
 			\item $G(\bottom)$
@@ -137,7 +137,7 @@ A few remarks are in place.
 }
 
 In the definition of balanced binary sequences, we consider the complete lattice $(\Sigma^\omega, \subseteq)$ and the function on sets given by $f(X) \defas 01X \cup 10X$. 
-Then, balanced binary sequences corresponds to $\gfp f$.	
+Then, balanced binary sequences correspond to $\gfp f$.	
 
 \Definition[Interval {$[0, 1]$}]{
 	Define the set $S$ as the largest set $X$ such that
@@ -149,15 +149,15 @@ Then, balanced binary sequences corresponds to $\gfp f$.
 A few remarks are in place.
 \begin{itemize}
 	\item 
-		Coinductively defined sets are uncountable and consists of infinite elements.
+		Coinductively defined sets are uncountable and consist of infinite elements.
 	\item 
 		Coinductively defined sets can be written as rules $x \implied f(x)$ meaning that, for all $y \in X$, there exists $x$ such that $y = f(x)$ and $x \in X$.
 	\item 
-		Coinductively defined sets allow proof by induction.
-		Consider prove that for all $x \in X$ we have $G(x)$.
+		Coinductively defined sets allow proof by coinduction.
+		Consider proving that for all $x$, if $G(x)$, then $x \in X$.
 		This can be proven by showing
 		\begin{enumerate}
-			\item For all $x$ and $i$, if $G(f_i(x))$, then $G(x)$
+			\item For all $x$ and $i$, if $G(f_i(x))$, then $G(x)$ \,,
 		\end{enumerate}
 		where $\{f_1, \ldots, f_n\}$ is the set of rules that define the set $X$.
 \end{itemize}
