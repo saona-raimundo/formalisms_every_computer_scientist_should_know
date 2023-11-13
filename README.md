@@ -1,9 +1,7 @@
-# formalisms_every_computer_scientist_should_know
-
-Formalisms Every Computer Scientist Should Know course at ISTA 2023.
+# Formalisms Every Computer Scientist Should Know at ISTA 2023
 
 This repo contains LaTeX transcription of the classes.
-There are also [Lean transcriptions of the classes](https://github.com/madvorak/fecssk). 
+There are also [Lean formalizations of the classes](https://github.com/madvorak/fecssk). 
 
 ## Contributions
 

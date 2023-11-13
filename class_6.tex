@@ -1,0 +1,78 @@
+{{%Localize command definitions
+
+\chapter{Class 6}
+% ChatGPT was used when working on this transcript.
+
+Formal system $F$ is a set of rules.
+Rule is a finite set of (formulas) premises $p_0, \dots, p_k$ and (a formula called) conclusion $c$.
+We usually have infinitely many rules but only finitely many different rule schemata.
+For example, schema $\phi \rightarrow \phi$ gives infinitely many rules like $p_3 \rightarrow p_3$.
+Axiom is a rule without premises.\bigskip\\
+Proof (derivation) is a finite sequence of formulas $\phi_0, \dots, \phi_n$ such that every formula in the sequence is
+\begin{itemize}
+\item either an axiom (which can be viewed as a special case of the following);
+\item or the conclusion of a rule whose premises occur earlier in the sequence.
+\end{itemize}
+This is a linear view.
+
+Linear view is usually easier for proving meta theorems.
+Tree view (inductive definition) is usually better in practice.
+
+Theorem is a formula that occurs in a proof. We distinguish the following:
+\begin{itemize}
+\item $\vdash \phi \;\dots\;$ ``$\phi$ is a theorem (of the formal system $F$)'' (has a proof) [syntax]
+\item $\vDash \phi \;\dots\;$ ``$\phi$ is valid ($\phi$ is tautology)'' (is true in all models) [semantics]
+\end{itemize}
+Formal system equipped with semantics is called a logic.
+Most of logic is about establishing $\vdash \phi$ iff $\vDash \phi$.
+
+Rule $R$ is sound iff [if all premises of $R$ are valid, then the conclusion of $R$ is valid].
+Formal system $F$ is sound iff all rules are sound (or equivalently, every theorem is valid).
+Formal system $F$ is complete iff every valid formula is a theorem.
+Formal system $F$ is consistent unless $\vdash \bot$ (or equivalently, there exists a formula that is not a theorem).
+Rule $R$ is derivable in $F$ iff [for all formulas $\phi$, $\underset{F \cup \{R\}}\vdash \phi$ iff $\underset{F}\vdash \phi$].
+Rule $R$ is admissible in $F$ iff $F \cup \{R\}$ is still consistent.
+Formula $\phi$ is expressible in a logic $L$ iff [there exists a formula $\psi$ of $L$ such that, for all interpretations $v$, $[[ \phi ]]_v = [[ \psi ]]_v$. %`⟦φ⟧ᵥ = ⟦ψ⟧ᵥ`].
+For example $\phi_1 \wedge \phi_2$ is expressible using only $\neg$ and $\vee$ (de Morgan)
+as $\psi = \neg(\neg\phi_1 \wedge \neg\phi_2)$.
+
+We can enumerate all theorems by systematically enumerating all possible proofs.
+The proof is a witness for validity.
+Sound formal system gives a sound procedure for validity (but not necessarily complete).
+Sound complete formal system gives a sound semi-complete procedure for validity (may not terminate on inputs
+that represent a formula that is not valid).
+To get a decision procedure (sound and complete procedure for validity), we need both
+(1) sound complete formal system for validity, and
+(2) sound complete formal system for satisfiability (to define a formal system for satisfiability,
+replace ``formulas'' ($\phi$ is valid) by ``judgements'' ($\phi$ is satisfiable);
+all axioms are satisfiable, all rules go from satisfiables to satisfiable).
+For every input $\phi$, one of them will eventually terminate.
+Conclude; either $\phi$ is valid, or $\neg\phi$ is satisfiable (which means that $\phi$ is not valid).
+Recall that, if both a set and its complement are recursively-enumerable, the set is recursive (decidable).
+
+Example (formal system for unsatisfiability):
+$$\inferrule
+{\Gamma[\bot]\qquad\qquad\Gamma[\top]}
+{\Gamma[p]}
+$$
+
+\section{Hilbert formal system for propositional logic}
+
+Hilbert system uses connectives $\rightarrow$ and $\neg$ only.
+Hilbert system has three axioms and one rule -- modus ponens (MP):
+$$\inferrule
+{\phi\qquad\qquad\qquad\phi\rightarrow\psi}
+{\psi}
+$$
+Axioms:
+\begin{itemize}
+\item (K): $\qquad
+\phi\rightarrow\psi\rightarrow\phi$
+\item (S): $\qquad
+(\phi\rightarrow\psi\rightarrow\chi)\rightarrow((\phi\rightarrow\psi)\rightarrow(\phi\rightarrow\chi))$
+\item (EM): $\qquad
+(\neg\phi\rightarrow\neg\psi)\rightarrow(\psi\rightarrow\phi)$
+\end{itemize}
+TODO
+
+}} % End localization of command definitions
