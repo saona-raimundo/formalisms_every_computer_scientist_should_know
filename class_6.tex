@@ -32,7 +32,7 @@ Formal system $F$ is complete iff every valid formula is a theorem.
 Formal system $F$ is consistent unless $\vdash \bot$ (or equivalently, there exists a formula that is not a theorem).
 Rule $R$ is derivable in $F$ iff [for all formulas $\phi$, $\underset{F \cup \{R\}}\vdash \phi$ iff $\underset{F}\vdash \phi$].
 Rule $R$ is admissible in $F$ iff $F \cup \{R\}$ is still consistent.
-Formula $\phi$ is expressible in a logic $L$ iff [there exists a formula $\psi$ of $L$ such that, for all interpretations $v$, $[[ \phi ]]_v = [[ \psi ]]_v$. %`⟦φ⟧ᵥ = ⟦ψ⟧ᵥ`].
+Formula $\phi$ is expressible in a logic $L$ iff [there exists a formula $\psi$ of $L$ such that, for all interpretations $v$, $[[ \phi ]]_v = [[ \psi ]]_v$.
 For example $\phi_1 \wedge \phi_2$ is expressible using only $\neg$ and $\vee$ (de Morgan)
 as $\psi = \neg(\neg\phi_1 \wedge \neg\phi_2)$.
 
@@ -70,9 +70,30 @@ Axioms:
 \phi\rightarrow\psi\rightarrow\phi$
 \item (S): $\qquad
 (\phi\rightarrow\psi\rightarrow\chi)\rightarrow((\phi\rightarrow\psi)\rightarrow(\phi\rightarrow\chi))$
-\item (EM): $\qquad
+\item (em): $\qquad
 (\neg\phi\rightarrow\neg\psi)\rightarrow(\psi\rightarrow\phi)$
 \end{itemize}
-TODO
+Example (prove $\phi \rightarrow \phi$ in Hilbert system):\\
+(K) $\phi \rightarrow (\psi \rightarrow \phi) \rightarrow \phi$\\
+(S) $(\phi \rightarrow (\psi \rightarrow \phi) \rightarrow \phi) \rightarrow ((\phi \rightarrow \psi \rightarrow \phi) \rightarrow (\phi \rightarrow \phi))$\\
+(MP) $(\phi \rightarrow \psi \rightarrow \phi) \rightarrow (\phi \rightarrow \phi)$\\
+(K) $\phi \rightarrow \psi \rightarrow \phi$\\
+(MP) $\phi \rightarrow \phi$\bigskip\\
+Notation: $\Gamma \vdash \phi$ means $\underset{F \,\cup\, \Gamma}\vdash \phi$ (the set of formulas $\Gamma$ is used as added axioms)\\
+Metatheorem (``deduction theorem''):
+$\Gamma \vdash \phi \rightarrow \psi$ iff $\Gamma, \phi \vdash \psi$\\
+Metaproof:\\
+``$\implies$'': One application of modus ponens.\\
+``$\impliedby$'':
+Assume $\psi$ has a proof $\pi$ using axioms $\Gamma$, $\phi$, (K), (S), (em).
+Show that $\phi \rightarrow \psi$ has a proof $\pi'$ using $\Gamma$, (K), (S), (em) --- induction on length $n$ of $\pi$.\\
+Case $n=1$: $\psi$ must be an axiom.
+Either $\psi \in \Gamma \cup \{\textup{K}, \textup{S}, \textup{em}\}$ so we prove it by (K),
+or $\psi = \phi$ so we use $\vdash \phi \rightarrow \phi$ as derived above.\\
+Case $n>1$: $\psi$ is the result of an application of modus ponens.
+We have $\chi$ and $\chi \rightarrow \psi$, both of which were derived from $\Gamma, \phi$ in fewer steps.
+Induction hypothesis gives us $\Gamma \vdash \phi \rightarrow \chi$ and $\Gamma \vdash \phi \rightarrow \chi \rightarrow \psi$.
+We use (S) in the form $(\phi \rightarrow \chi \rightarrow \psi) \rightarrow (\phi \rightarrow \chi) \rightarrow (\phi \rightarrow \psi)$ and apply modus ponens twice,
+resulting in $\phi \rightarrow \psi$ derived from $\Gamma$ only.
 
 }} % End localization of command definitions
