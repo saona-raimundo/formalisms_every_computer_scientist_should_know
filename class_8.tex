@@ -1,0 +1,83 @@
+{{%Localize command definitions
+
+\chapter{Class 8}
+
+We now talk about three proof systems:
+\begin{itemize}
+\item Hilbert $$\vdash \phi$$
+\item Natural deduction $$\Gamma \vdash \phi$$
+\item Grentzen $$\Gamma \vdash \Delta$$
+\end{itemize}
+We now talk abou three decision procedures (either for validity or for satisfiability):
+\begin{itemize}
+\item Branching (if we don't derive $\bot$ then it is satisfiable)
+$$\inferrule
+{\Gamma[\bot]\qquad\qquad\Gamma[\top]}
+{\Gamma[p]}
+$$
+\item Resolution
+$$\inferrule
+{\Gamma,\, C_1,\, C_2,\, C_1[\bot] \vee C_2[\bot]}
+{\Gamma,\, C_1[p],\, C_2[p]}
+$$
+\item Unit resolution, combined with branching of lower priority (DPLL)
+$$\inferrule
+{\Gamma,\, C[\bot]}
+{\Gamma,\, \ell,\, C[\neg\ell]}
+$$
+Example: $$p \vee q \vee r ,\; \neg p \vee \neg q \vee ¬r ,\; \neg p \vee q \vee r ,\; \neg q \vee r ,\; q \vee \neg r$$
+First we branch on $r$.
+TODO.
+It is satisfied by $p=\bot,\; q=\top,\; r=\top$.
+\end{itemize}
+
+Horn clause is a clause with at most one positive literal.
+We can view them as implications where LHS is a conjunction of positive propositions:
+\begin{align*}
+\neg p \vee \neg q 
+	&\iff p \wedge q \rightarrow \bot \\
+\neg p \vee \neg q \vee r 
+	&\iff p \wedge q \rightarrow r \\
+r 
+	&\iff \top \rightarrow r \\
+\end{align*}
+
+\subsection{Metatheorems}
+
+\subsubsection{Compactness}
+
+Countable set $\Gamma$ of formulas is satisfiable iff every finite subset of $\Gamma$ is satisfiable.
+
+\subsubsection{Craig's interpolation}
+
+\subsubsection{Cut elimination}
+
+Cut rule in NK / NJ:
+$$\inferrule
+{\Gamma\vdash\phi\qquad\qquad\qquad\Gamma,\phi\vdash\psi}
+{\Gamma\vdash\psi}
+$$
+Cut rule in LK:
+$$\inferrule
+{\Gamma\vdash\phi,\Delta\qquad\qquad\qquad\Gamma,\phi\vdash\Delta}
+{\Gamma\vdash\Delta}
+$$
+
+If a judgement can be proved with the cut rule, it can also be proved without the cut rule.
+In fact, it is ``iff''; the other direction is trivial.
+Of course, the proof may become longer (introducing a lemma $\phi$ often helps in practice).
+It is a purely syntactic metatheorem. We cannot use deduction to prove it.
+
+\section{First-order logic}
+
+First-order logic, also called ``predicate logic'', is propositional logic with quantifiers $\forall$ (for all) and $\exists$ (exists).
+
+\subsection{Syntax}
+
+\subsubsection{Nonlogical symbols (``signature'')}
+
+\subsubsection{Logical symbols}
+
+\subsubsection{Safe substitution}
+
+}} % End localization of command definitions
