@@ -1,0 +1,134 @@
+\chapter{First Order Logic (FOL)}
+\begin{definition}
+    Interpretation $I$ in first-order structure: 
+    \begin{enumerate}
+        \item Domain $D_I$
+        \item for each $n$-ary function symbol $f \in F$, $[f]_I: D_I^n \to D_I$
+        \item for each $n$-ary predicate symbol $p \in P$, $[p]_I: D_I^n \to B = \{true,false\}$
+        \item "context" (environment) for each (free) variable $x \in X$, $[x]_I \in D_I$
+    \end{enumerate}
+\end{definition}
+Formula $\phi$ is closed if it has no free variables.
+
+Given an interpretation $I$, a term $t$ and a formula $\phi$ have the following meaning: 
+\[
+\begin{split}
+    [t]_I &= \begin{cases}
+        [x]_I & t=x  \\
+        [f]_I([t_1]_I, [t_2]_I, \dots, [t_n]_I) & t=f(t_1, \dots, t_n)
+    \end{cases}
+\end{split}
+\]
+
+\[
+\begin{split}
+    [\phi]_I &= \begin{cases}
+        [x]_I & t=x  \\
+        [p]_I([t_1]_I, [t_2]_I, \dots, [t_n]_I) & \phi = p(t_1, \dots, t_n)
+    \end{cases}
+\end{split}
+\]
+\[
+\begin{split}
+    [\phi_1 \Rightarrow \phi_2]_I &= \textit{True iff} [\phi_1]_I = false \textit{ or } [\phi_2]_I = true
+\end{split}
+\]
+
+\[
+[\forall x. \phi]_I = \textit{True iff for all } d \in D_I, [\phi]_{I[x \to d]}
+\]
+\[
+[\exists x. \phi]_I = \textit{True iff for some } d \in D_I, [\phi]_{I[x \to d]}
+\]
+
+\[
+\phi \textit{ valid } (\vDash \phi) \textit{ iff } [\phi]_I = \textit{True for all interpretations } I  
+\]
+
+
+\[
+\phi \textit{ satisfiable } \textit{ iff } [\phi]_I = \textit{True for some interpretations } I 
+\]
+
+
+\subsection{Small Detour}
+PCP (Post Correspondence Problem): Given a finite set $S$ of dominoes $\frac{s}{t}$ where $s,t \in \{0,1\}^*$. Is there a finite sequence $\frac{s_1}{t_1}, \dots \frac{s_n}{t_n}$ of (possibly repeating) dominoes from $S$ such that the 
+$$s_1 \cdot s_2 \cdot \dots \cdot s_n = t_1 \cdot t_2 \dots \cdot t_n$$
+
+\begin{theorem}
+    The PCP problem is undecidable.
+\end{theorem}
+
+
+\subsection{Back to Work}
+\begin{metatheorem} 
+    \begin{enumerate}
+        \item (Compactness) Set $\Gamma$ of formulas is satisfiable iff every finite subset of $\Gamma$ is satisfiable.
+        \item (Lowenheim-Skolem). If a set $\Gamma$ of formulas is satisfiable then $\Gamma$ is satisfiable by an interpretation with countable domain. 
+        \item Both the validity and satisfiability problems for FOL are undecidable.
+    \end{enumerate}
+\end{metatheorem}
+\begin{proof}
+    (Proof sketch of undecidability) Let $F = \{e,f_0, f_1\}$ where $e$ is 0-ary and $f_0,f_1$ are unary. Basically a string $011$ of 0,1s is represented as $f_1(f_1(f_0(e)))$.  
+
+    Let $P = \{p\}$ where $p$ is a binary predicate. Basically a domino $\frac{s}{t}$ is represented by $p(s,t)$. 
+
+    Given an instance $R$ of PCP, the formula $\phi_R = (\phi_1 \wedge \phi_2) \Rightarrow \phi_3$ is valid iff the answer to $R$ is yes:
+
+    \[
+    \begin{split}
+        \phi_1 &= \bigwedge_{1 \leq i \leq k} P(s_i(e), t_i(e)) \\
+        \phi_2 &= \forall v,w. (p(v,w) \Rightarrow \bigwedge_{1 \leq i \leq k} p(s_i(v), t_i(w))) \\ 
+        \phi_3 &= \exists z. p(z,z)
+    \end{split}
+    \]
+\end{proof}
+\subsection{Three Sound and Complete Proof Systems}
+\subsubsection{Hilbert}
+\[
+\begin{split}
+1. &(\forall x. \phi) \Rightarrow \phi[x:=t]  \\
+2. &\forall x. (\phi \Rightarrow \psi) \Rightarrow (\forall x. \phi) \Rightarrow (\forall x. \psi) \\ 
+3. & \phi \Rightarrow \forall x. \phi ~~~ \textit{provided that } x \textit{ is not free in } \phi
+\end{split}
+\]
+($\phi[x:=t]$ means safely replacing each occurrence of $x$ by $t$) \\
+
+\subsection{Gentzen}
+\[
+\begin{split}
+\frac{\Gamma, \phi[x:=t] \vdash \Delta}{\Gamma, \forall x. \phi \vdash \Gamma} &  \forall-elim \\
+\frac{\Gamma \vdash \Delta, \phi[x:=y]}{\Gamma \vdash \Delta, \forall x. \phi} &  \forall-intro \textit{ y is a new (fresh) variable} \\
+\frac{Gamma, \phi[x:=y]}{\Gamma, \exists x. \phi \vdash \Delta} & \exists-elim \\ 
+\frac{Gamma \vdash \Delta, \phi[x:=t]}{\Gamma \vdash \Delta, \exists x. \phi} & \exists-intro
+\end{split}
+\]
+
+\subsection{Natural Deduction}
+\[
+\begin{split}
+    \frac{\forall x \phi}{\phi[x:=t]} \\ 
+    \frac{\phi[x:=t]}{\exists x. \phi} \\ 
+    \frac{\begin{bmatrix}
+        y \textit{ new} \\ 
+        ...\\
+        \phi[x:=y]
+    \end{bmatrix}}{\forall x. \phi} \\ 
+    \frac{ \exists x. \phi, \begin{bmatrix}
+        y: \phi[x:=y] \\ 
+        ...\\
+        \psi 
+    \end{bmatrix}}{\psi}
+\end{split}
+\]
+
+\begin{homework} Prove de Morgan for quantifiers 
+\[
+\forall x. \phi \Leftrightarrow \not \exists x. \not \phi
+\]
+in all three systems. 
+\end{homework}
+
+\begin{homework}
+	 Use PCP to show satisfiability of FOL is undecidable. 
+\end{homework}
