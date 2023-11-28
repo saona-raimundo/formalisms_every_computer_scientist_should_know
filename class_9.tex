@@ -99,8 +99,8 @@ $$s_1 \cdot s_2 \cdot \dots \cdot s_n = t_1 \cdot t_2 \dots \cdot t_n$$
 \begin{split}
 \frac{\Gamma, \phi[x:=t] \vdash \Delta}{\Gamma, \forall x. \phi \vdash \Gamma} &  \forall-elim \\
 \frac{\Gamma \vdash \Delta, \phi[x:=y]}{\Gamma \vdash \Delta, \forall x. \phi} &  \forall-intro \textit{ y is a new (fresh) variable} \\
-\frac{Gamma, \phi[x:=y]}{\Gamma, \exists x. \phi \vdash \Delta} & \exists-elim \\ 
-\frac{Gamma \vdash \Delta, \phi[x:=t]}{\Gamma \vdash \Delta, \exists x. \phi} & \exists-intro
+\frac{\Gamma, \phi[x:=y]}{\Gamma, \exists x. \phi \vdash \Delta} & \exists-elim \\ 
+\frac{\Gamma \vdash \Delta, \phi[x:=t]}{\Gamma \vdash \Delta, \exists x. \phi} & \exists-intro
 \end{split}
 \]
 
