@@ -25,10 +25,17 @@ $$\inferrule
 {\Gamma,\, C[\bot]}
 {\Gamma,\, \ell,\, C[\neg\ell]}
 $$
-Example: $$p \vee q \vee r ,\; \neg p \vee \neg q \vee ¬r ,\; \neg p \vee q \vee r ,\; \neg q \vee r ,\; q \vee \neg r$$
+Example: $$p \vee q \vee r ,\; \neg p \vee \neg q \vee \neg r ,\; \neg p \vee q \vee r ,\; \neg q \vee r ,\; q \vee \neg r$$
 First we branch on $r$.
-TODO.
+\begin{itemize}
+\item Case $r=\bot$:
+$$p \vee q ,\; \neg p \vee q ,\; \neg q$$
+We didn't continue this branch.
+\item Case $r=\top$:
+$$\neg p \vee \neg q ,\; q$$
+Then we propagate $q$. We end up with $\neg p$.\\
 It is satisfied by $p=\bot,\; q=\top,\; r=\top$.
+\end{itemize}
 \end{itemize}
 
 Horn clause is a clause with at most one positive literal.
@@ -49,6 +56,10 @@ r
 Countable set $\Gamma$ of formulas is satisfiable iff every finite subset of $\Gamma$ is satisfiable.
 
 \subsubsection{Craig's interpolation}
+
+We have $\vdash \phi \rightarrow \psi$ iff there exists a third formula $\chi$ (the "interpolant") which only uses
+nonlogical symbols (in propositional logic, it is propositions only) that occur in
+both $\phi$ and $\psi$ such that $\vdash \phi \rightarrow \chi$ and $\vdash \chi \rightarrow \psi$.
 
 \subsubsection{Cut elimination}
 
@@ -75,9 +86,36 @@ First-order logic, also called ``predicate logic'', is propositional logic with 
 \subsection{Syntax}
 
 \subsubsection{Nonlogical symbols (``signature'')}
+\begin{itemize}
+\item finite set of variables $X = \{ x, y, z, \dots \}$
+\item finite set of function symbols $F = \{ f, g, h, \dots \}$
+\item finite set of predicate symbols $P = \{ p, q, r, \dots \}$
+\end{itemize}
+Each function symbol has a fixed ``arity'' (number of arguments), which can be zero (arity 0 gives a constant).
+Each predicate symbol has also a fixed ``arity'' (number of arguments), which can be zero (arity 0 gives a proposition).
 
 \subsubsection{Logical symbols}
+\begin{itemize}
+\item connectives ($\bot, \top, \neg, \wedge, \vee, \rightarrow$)
+\item quantifiers ($\forall, \exists$)
+\item finite set of predicate symbols $P = \{ p, q, r, \dots \}$
+\end{itemize}
+We don't add parentheses to the symbols; we will talk about syntax trees;
+only if we want to write them down as strings, we add parentheses (as few as possible).
+
+\subsubsection{Grammar}
+\begin{itemize}
+\item Terms: $\phi ~:=~ f_0 ~|~ f_n(t_1,\dots,t_n)$
+\item Formulas: $\phi ~:=~ p_0 ~|~ p_n(t_1,\dots,t_n) ~|~ \bot ~|~ \top ~|~ \neg\phi ~|~ \phi\wedge\phi ~|~ \phi\vee\phi ~|~ \phi\rightarrow\phi ~|~ \forall x. \phi ~|~ \exists x. \phi$
+\end{itemize}
+When we write $\forall x. \phi$, every occurence of $x$ is bound in $\phi$.
+A variable that is not bound is called free.
+A change of bound variables does not change the abstract syntax tree (same in abstract syntax).
 
 \subsubsection{Safe substitution}
+$$\forall x\,.\;\, \exists y\,.\;\, y \ge x + 1$$
+If we want to substitute $y^2$ for $x$, we must first rename $y$ to $z$ and then substitute.
+$$\forall x\,.\;\, \exists z\,.\;\, z \ge x + 1$$
+$$\exists z\,.\;\, z \ge y^2 + 1$$
 
 }} % End localization of command definitions
