@@ -14,3 +14,4 @@ If you need new macros, add them to your chapter, enclosed by `{{` and `}}` to m
 See `class_3.tex` for examples of macros.
 
 Compilation of the pdf is automatic through GitHub Actions.
+
