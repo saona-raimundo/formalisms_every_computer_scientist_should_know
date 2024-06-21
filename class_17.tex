@@ -1,0 +1,36 @@
+{{%Localize command definitions
+
+\chapter{Class 17}
+
+$$ \llbracket \textup{skip} \rrbracket = \lambda \sigma . \sigma $$
+
+$$ \llbracket \textup{assert } b \rrbracket = \lambda \sigma . \textup{ if } \llbracket b \rrbracket \sigma 
+\textup{ then } \sigma \textup{ else fail} $$
+
+$$ \llbracket c \rrbracket : \Sigma \rightarrow \Sigma_\bot $$
+
+$$ \llbracket c \rrbracket : \Sigma \rightarrow \Sigma_\bot^\textup{fail} = \Sigma \cup \{ \textup{fail}, \bot \} $$
+
+Operationally:
+
+$$\inferrule
+{ \langle b, \sigma \rangle \downarrow \top }
+{ \langle \textup{assert } b, \sigma \rangle \downarrow \sigma }
+$$
+
+$$\inferrule
+{ \langle b, \sigma \rangle \downarrow \bot }
+{ \langle \textup{assert } b, \sigma \rangle \downarrow \textup{fail} }
+$$
+
+$$ \textup{wlp} ( \textup{skip}, \psi ) = \psi $$
+
+$$ \textup{wlp} ( \textup{assert } b, \psi) = b \wedge \psi $$
+
+$$ \{ b \wedge \psi \} \textup{ assert } b~ \{ \psi \} $$
+
+$$ \llbracket c \rrbracket \subseteq \Sigma \times \Sigma_\bot^\textup{fail} $$
+
+$$ \llbracket \textup{assume } b \rrbracket = \{ (\sigma, \sigma') \;|\; \sigma \vDash b \and \sigma' = \sigma \} $$
+
+}} % End localization of command definitions
