@@ -1,0 +1,189 @@
+{{%Localize command definitions
+
+% "empty vertical rectangle" macro by campa		
+\newcommand*{\vor}{{\;\setlength{\fboxsep}{0pt}\fbox{\phantom{l}}\;}}
+
+\chapter{Class 17}
+
+$$ \llbracket \textup{skip} \rrbracket = \lambda \sigma . \sigma $$
+
+$$ \llbracket \textup{assert } b \rrbracket = \lambda \sigma . \textup{ if } \llbracket b \rrbracket \sigma 
+\textup{ then } \sigma \textup{ else fail} $$
+
+$$ \llbracket c \rrbracket : \Sigma \rightarrow \Sigma_\bot $$
+
+$$ \llbracket c \rrbracket : \Sigma \rightarrow \Sigma_\bot^\textup{fail} = \Sigma \cup \{ \textup{fail}, \bot \} $$
+
+Operationally:
+$$\inferrule
+{ \langle b, \sigma \rangle \downarrow \top }
+{ \langle \textup{assert } b, \sigma \rangle \downarrow \sigma }
+$$
+
+In nondeterministic settings, the symbol $\downarrow$ means ``can reach''.
+
+$$\inferrule
+{ \langle b, \sigma \rangle \downarrow \bot }
+{ \langle \textup{assert } b, \sigma \rangle \downarrow \textup{fail} }
+$$
+
+$$ \textup{wlp} ( \textup{skip}, \psi ) = \psi $$
+
+$$ \textup{wlp} ( \textup{assert } b, \psi) = b \wedge \psi $$
+
+$$ \{ b \wedge \psi \} \textup{ assert } b~ \{ \psi \} $$
+
+$$ \llbracket c \rrbracket \subseteq \Sigma \times \Sigma_\bot^\textup{fail} $$
+
+$$ \llbracket \textup{assume } b \rrbracket = \{ (\sigma, \sigma') \;|\; \sigma \vDash b \wedge \sigma' = \sigma \} $$
+
+We define:
+$$ \textup{wlp} ( c, \psi ) = \psi = \{ \sigma \;|\; \forall \sigma'. (\sigma, \sigma') \in 
+\llbracket c \rrbracket \implies \sigma' \vDash \psi \} $$
+
+$$ \textup{wlp} ( \textup{assume } b, \psi) = b \implies \psi $$
+
+$$ \{ b \implies \psi \} \textup{ assume } b~ \{ \psi \} $$
+
+Assert false:
+$$ \llbracket \textup{abort} \rrbracket = \lambda \sigma . \textup{fail} $$
+
+$$ \llbracket \textup{havoc } b \rrbracket =  \{ (\sigma, \sigma') \;|\; \sigma' \vDash b \} $$
+
+\section{Disjkstra's guarded commands}
+
+$$ \textup{gc} := b \rightarrow c ~|~ \textup{gc} \vor \textup{gc} $$
+
+We say $b$ is a ``guard'' and we say $\vor$ means ``alternatively''. For example:
+$$ x \le 5 \rightarrow x := x + 1 \vor x \ge 5 \rightarrow x := x - 1 $$
+
+$$ c := \textup{skip} ~|~ \textup{abort} ~|~ x := a ~|~ c; c ~|~ \textup{if gc fi} ~|~ \textup{do gc od} $$
+
+$$\inferrule
+{ \langle b, \sigma \rangle \downarrow \top \\ \langle c, \sigma \rangle \downarrow \sigma' }
+{ \langle b \rightarrow c, \sigma \rangle \downarrow \sigma' }
+$$
+
+$$\inferrule
+{ \langle b, \sigma \rangle \downarrow \bot }
+{ \langle b \rightarrow c, \sigma \rangle \downarrow \textup{fail} }
+$$
+
+$$\inferrule
+{ \langle \textup{gc}_1, \sigma \rangle \downarrow \sigma' }
+{ \langle \textup{gc}_1 \vor \textup{gc}_2, \sigma \rangle \downarrow \sigma' }
+$$
+
+$$\inferrule
+{ \langle \textup{gc}_2, \sigma \rangle \downarrow \sigma' }
+{ \langle \textup{gc}_1 \vor \textup{gc}_2, \sigma \rangle \downarrow \sigma' }
+$$
+
+$$\inferrule
+{ \langle \textup{gc}_1, \sigma \rangle \downarrow \textup{fail} \\
+  \langle \textup{gc}_2, \sigma \rangle \downarrow \textup{fail} }
+{ \langle \textup{gc}_1 \vor \textup{gc}_2, \sigma \rangle \downarrow \sigma' \textup{fail} }
+$$
+
+$$\inferrule
+{ \langle \textup{gc}, \sigma \rangle \downarrow \sigma' }
+{ \langle \textup{if gc fi}, \sigma \rangle \downarrow \sigma' }
+$$
+
+$$\inferrule
+{ \langle \textup{gc}, \sigma \rangle \downarrow \textup{fail} }
+{ \langle \textup{if gc fi}, \sigma \rangle \downarrow \textup{fail} }
+$$
+
+$$\inferrule
+{ \langle \textup{gc}, \sigma \rangle \downarrow \textup{fail} }
+{ \langle \textup{do gc od}, \sigma \rangle \downarrow \sigma }
+$$
+
+$$\inferrule
+{ \langle \textup{gc}, \sigma \rangle \downarrow \sigma' \\
+  \langle \textup{do gc od}, \sigma' \rangle \downarrow \sigma'' }
+{ \langle \textup{do gc od}, \sigma \rangle \downarrow \sigma'' }
+$$
+
+Euclid(gcd):
+
+$$ \textup{do } x > y \rightarrow x := x - y \vor y > x \rightarrow y := y - x \textup{ od} $$
+
+\section{Parallelism}
+
+For example, $ x := 0 ~||~ x := 1 $ is either $(x := 0;\; x := 1)$ or $(x := 1;\; x := 0)$.
+
+~\\Parallelism as nondeterministic interleaving of atomic actions (programs):
+\begin{enumerate}
+	\item nondeterministic
+	\item noncompositional
+	\item nonterminating ``reactive programs''
+\end{enumerate}
+Concurrency Theory / Process Algebra (we want to add $||$ to languages).
+There were dozens of process algebras in the 1990s.
+
+\subsection{CCS (Calculus of Communicating Systems) by Milner}
+
+\begin{itemize}
+\item processes: $P$, $Q$, ...
+\item nil: $0$ (like skip)
+\item atomic actions: $a, b, \dots, \in A$
+\item prefix: $a.P$ (like sequencing)
+\item alternative: $P + Q$
+\item process def: $C \,\hat{=}\, P$
+\item parallelism: $P || Q$
+\item restriction: $(\nu a) P$
+\end{itemize}
+Iterate = $a$.Iterate + $b$ 0
+
+\subsection{SOS (Structured Operational Semantics)}
+(single step)
+
+$$\inferrule
+{ ~ }
+{ a.P \xrightarrow{a} P }
+$$
+
+$$\inferrule
+{ P \xrightarrow{a} P' }
+{ P+Q \xrightarrow{a} P' }
+$$
+
+$$\inferrule
+{ Q \xrightarrow{a} Q' }
+{ P+Q \xrightarrow{a} Q' }
+$$
+
+$$\inferrule
+{ P \xrightarrow{a} P' }
+{ C \xrightarrow{a} P' }
+\; C\,\hat{=}\,P
+$$
+
+$$\inferrule
+{ P \xrightarrow{a} P' }
+{ P || Q \xrightarrow{a} P' || Q }
+$$
+
+$$\inferrule
+{ Q \xrightarrow{a} Q' }
+{ P || Q \xrightarrow{a} P || Q' }
+$$
+
+Synchronized communication:
+
+$$ P \xrightarrow{a} P' \qquad Q \xrightarrow{\bar{a}} Q' $$
+
+$$\inferrule
+{ P \xrightarrow{a} P' \\ Q \xrightarrow{\bar{a}} Q' }
+{ P || Q \xrightarrow{\tau} P' || Q' }
+$$
+
+$$\inferrule
+{ P \xrightarrow{b} P' }
+{ (\nu a) P \xrightarrow{b} (\nu a) P' }
+\; a \neq b,\, \bar{a} \neq b
+$$
+
+}} % End localization of command definitions
