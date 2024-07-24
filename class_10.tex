@@ -1,0 +1,39 @@
+\subsection{First Order Resolution: Classical Automated Theorem Proving} We want to prove $\models \phi$ for a closed $\phi$.
+\begin{enumerate}
+    \item Negate. Show $\neg \phi$ is unsat.
+    \item Bring $\neg \phi$ into "prenex" form (all quantifiers are in front). (Ex. $\exists x. \phi(x) \land \gamma \iff \exists x (\phi(x) \land \gamma)$).
+    \item Bring $\gamma$ into CNF.
+    \item "Skolemization" gets rid of $\exists$. 
+    \begin{itemize}
+        \item Consider that  while for $\exists x.\phi(x)$ is sat iff $\phi(\hat{x})$ is sat, we have that $\forall y \exists x \phi(x)$  is sat iff $\phi(f(y))$ is sat where $f(y)$ is a new function symbol. Thus,for each $\exists x$ within the scope of a universally quantified variables $y_1, \cdots,y_n$, drop $\exists x$ and replace each bound occurrence of x by $f(y_1,\cdots,y_n)$ where f is a new n-ary function symbol. E.g. 
+        \begin{equation}
+            \forall x, \exists y \forall z_1,z_2 \exists y . \phi (x,y,z_1,z_2, u) \rightarrow \forall x \forall z_1, z_2. \phi (x, f(x), z_1, z_2, g(x, z_1,z_2)).
+        \end{equation}
+    \end{itemize}
+    \item Drop $\forall$.
+    \item \textit{Theorem.} For an interpretation $I$, clauses $C_1$ and $C_2$, and literals $l$ and $l'$. If $I \models C_1[l]$ and $I \models C_2[\neg l']$ and $l, l'$ are "unifiable" (i.e, there is a substitution, which is a function from variables to terms, that when applied to $l$ and $l'$, makes them equal), then $I \models X_1\theta [\bot] \lor C_2\theta [\bot]$ where $\theta$ is the most general unifier of $l$  and $l'$.
+    
+    For example for a variable x and a constant $S$, we have that $m(x)$ and $\neg m(S)$ are unifiable by replacing $x $ by $s$. The purpose is to make literals the same.
+\end{enumerate}
+
+\subsection{First order theories} Theories defined by 1) signature (set of functions + predicate symbols) and 2) either by a r.e. set of closed formulas called axioms A (set of all A-valid closed formulas) or by a specific "intended" interpretation $I$ (true formulas in $I$).
+
+Formally, a theory $T$ is a r.e. set of closed formulas (there are no free variables) that are closed under $\models$, i.e 
+
+\textit{Def.} $T \models \phi$  iff $\forall I ((\forall \psi \in T. I \models \psi) \Rightarrow I \models \phi)$. 
+
+We say that 
+\begin{itemize}
+    \item $\phi$ is $T-$valid iff $T \models \phi$
+    \item $\phi$ is $T-$satisfiable iff $\exists I. I$ T-model $\phi$.
+    \item $I$ is a $T-$model iff $\forall \psi \in T. I \models \psi$.
+    \item $\phi, \psi$ are $T-$equivalent iff $\phi,\psi$ have truth value in all $T-$models.
+\end{itemize}
+Therefore, $T$ is either (1) the set of all $A-$valid closed formulas or (2) $T$ is the set of all formulas true in I.
+
+$T$ is \underline{consistent} iff $\exists I. \forall \psi \in T$, $I\models \psi$ (always the case for (2)).
+
+$T$ is \underline{complete} iff for all closed formulas $\psi$ of the signature, either $T \models \psi$ or $T \models \neg \psi$ (always the case for (2)).
+
+$T$ is \underline{decidable} iff the problem "given $\psi$, is $T \models \psi$" is decidable.
+
